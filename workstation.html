@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RazzanoAI Workstation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1B2A4A;--navy-deep:#0F1A2E;--navy-dark:#0A1220;
+  --gold:#C4973B;--gold-light:#D4AD5A;
+  --cream:#FAF8F4;--text:#2C2C2C;--text-light:#5A5A5A;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--text);overflow:hidden;height:100vh;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(196,151,59,0.2);border-radius:4px;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,80%,100%{opacity:0.3;}40%{opacity:1;}}
+
+/* ═══ LAYOUT ═══ */
+.app{display:flex;height:100vh;width:100%;}
+
+/* ═══ SIDEBAR ═══ */
+.sidebar{width:260px;background:var(--navy-dark);display:flex;flex-direction:column;border-right:1px solid rgba(196,151,59,0.08);flex-shrink:0;}
+.sidebar-brand{padding:24px 20px 20px;border-bottom:1px solid rgba(196,151,59,0.08);}
+.sidebar-brand h1{font-size:18px;font-weight:500;color:#FFF;letter-spacing:0.5px;}
+.sidebar-brand h1 span{color:var(--gold);font-weight:400;}
+.sidebar-brand p{font-size:10px;font-weight:300;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:4px;}
+
+/* Persona Switcher */
+.persona-switch{padding:16px 20px;}
+.persona-switch label{font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);display:block;margin-bottom:10px;}
+.persona-btns{display:flex;gap:6px;}
+.persona-btn{flex:1;padding:10px 8px;border:none;border-radius:8px;cursor:pointer;text-align:center;background:transparent;border-bottom:2px solid transparent;transition:all 0.2s;}
+.persona-btn.active-katie{background:rgba(255,255,255,0.08);border-bottom-color:#FFF;}
+.persona-btn.active-anthony{background:rgba(196,151,59,0.12);border-bottom-color:var(--gold);}
+.persona-btn .avatar{width:28px;height:28px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#FFF;}
+.persona-btn .avatar.k{background:var(--navy);}
+.persona-btn .avatar.a{background:var(--gold);}
+.persona-btn .pname{font-size:12px;font-weight:300;color:rgba(255,255,255,0.4);}
+.persona-btn.active-katie .pname,.persona-btn.active-anthony .pname{font-weight:500;color:#FFF;}
+.persona-btn .prole{font-size:9px;font-weight:300;color:rgba(255,255,255,0.25);margin-top:2px;}
+
+/* Client List */
+.client-section{flex:1;overflow-y:auto;padding:0 12px;}
+.section-label{font-size:10px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding:20px 8px 12px;}
+.client-item{padding:10px 12px;margin-bottom:4px;border-radius:6px;cursor:pointer;border-left:2px solid transparent;transition:all 0.2s;}
+.client-item:hover{background:rgba(255,255,255,0.03);}
+.client-item.active{background:rgba(196,151,59,0.1);border-left-color:var(--gold);}
+.client-item .cname{font-size:13px;font-weight:400;color:rgba(255,255,255,0.7);}
+.client-item.active .cname{color:#FFF;}
+.client-item .cstatus{display:flex;align-items:center;gap:6px;margin-top:3px;}
+.client-item .cstatus span{font-size:10px;font-weight:300;color:rgba(255,255,255,0.35);}
+.client-item .dot{width:6px;height:6px;border-radius:50%;}
+.dot.warn{background:#C46B3B;}
+.dot.flag{background:var(--gold);}
+
+/* Stats */
+.stats-section{padding:0 20px 20px;border-top:1px solid rgba(196,151,59,0.08);}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.stat-row .slabel{font-size:13px;font-weight:300;color:rgba(255,255,255,0.5);}
+.stat-row .sval{font-size:18px;font-weight:500;color:rgba(255,255,255,0.8);}
+.stat-row .sval.gold{color:var(--gold);}
+.stat-row .sval.warn{color:#C46B3B;}
+
+/* Tier badge */
+.tier-badge{padding:12px 20px;border-top:1px solid rgba(196,151,59,0.08);text-align:center;}
+.tier-badge span{font-size:9px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+
+/* ═══ MAIN AREA ═══ */
+.main{flex:1;display:flex;flex-direction:column;background:#FFF;}
+
+/* Header */
+.main-header{padding:16px 28px;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;justify-content:space-between;align-items:center;}
+.mh-left .mh-name{font-size:16px;font-weight:500;color:var(--navy);}
+.mh-left .mh-sub{font-size:11px;font-weight:300;color:var(--text-light);margin-top:2px;}
+.mh-right{display:flex;gap:12px;align-items:center;}
+.mode-badge{padding:6px 14px;border-radius:20px;border:1px solid rgba(196,151,59,0.2);font-size:11px;font-weight:400;color:var(--gold);letter-spacing:0.5px;}
+.header-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#FFF;}
+
+/* Messages */
+.messages{flex:1;overflow-y:auto;padding:24px 28px;background:#FAFAF8;}
+.msg{display:flex;margin-bottom:16px;animation:fadeIn 0.4s ease;}
+.msg.user{justify-content:flex-end;}
+.msg.ai{justify-content:flex-start;}
+.msg-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#FFF;margin-right:12px;flex-shrink:0;margin-top:4px;}
+.msg-bubble{max-width:75%;padding:14px 18px;font-size:14px;line-height:1.65;font-weight:300;white-space:pre-wrap;}
+.msg.user .msg-bubble{background:var(--navy);color:#FFF;border-radius:16px 16px 4px 16px;}
+.msg.ai .msg-bubble{border-radius:16px 16px 16px 4px;}
+.msg.ai.katie .msg-bubble{background:#F4F3F0;color:#2C2C2C;border-left:2px solid rgba(27,42,74,0.15);}
+.msg.ai.anthony .msg-bubble{background:rgba(196,151,59,0.08);color:#2C2C2C;border-left:2px solid rgba(196,151,59,0.3);}
+.msg-persona{font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.msg.katie .msg-persona{color:var(--navy);}
+.msg.anthony .msg-persona{color:var(--gold);}
+
+/* Typing */
+.typing{display:flex;align-items:center;gap:12px;padding:8px 0;animation:fadeIn 0.3s ease;}
+.typing .dots{display:flex;gap:4px;}
+.typing .dot{width:6px;height:6px;border-radius:50%;opacity:0.3;}
+.typing .dot:nth-child(1){animation:pulse 1.2s 0s infinite;}
+.typing .dot:nth-child(2){animation:pulse 1.2s 0.2s infinite;}
+.typing .dot:nth-child(3){animation:pulse 1.2s 0.4s infinite;}
+
+/* Quick Actions */
+.quick-bar{padding:12px 28px 0;border-top:1px solid rgba(196,151,59,0.1);display:flex;gap:8px;align-items:center;}
+.quick-bar .qlabel{font-size:10px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-light);margin-right:4px;}
+.quick-btn{padding:6px 14px;font-size:12px;font-family:'Jost',sans-serif;font-weight:400;background:transparent;border-radius:20px;cursor:pointer;transition:all 0.2s;}
+.quick-btn.katie{border:1px solid rgba(27,42,74,0.15);color:var(--navy);}
+.quick-btn.katie:hover{background:var(--navy);color:#FFF;}
+.quick-btn.anthony{border:1px solid rgba(196,151,59,0.2);color:var(--gold);}
+.quick-btn.anthony:hover{background:var(--gold);color:#FFF;}
+
+/* Input */
+.input-area{padding:16px 28px 20px;border-top:1px solid rgba(0,0,0,0.04);background:#FFF;}
+.input-row{display:flex;gap:12px;align-items:center;}
+.input-row input{flex:1;padding:12px 18px;font-size:14px;font-family:'Jost',sans-serif;font-weight:300;border:1px solid rgba(0,0,0,0.08);border-radius:24px;outline:none;background:#FAFAF8;color:var(--navy);transition:border-color 0.2s;}
+.input-row input:focus{border-color:var(--gold);}
+.send-btn{width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#FFF;transition:transform 0.15s;}
+.send-btn:active{transform:scale(0.95);}
+.input-footer{text-align:center;margin-top:10px;font-size:10px;font-weight:300;color:rgba(0,0,0,0.2);letter-spacing:0.5px;}
+</style>
+
+<style>
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(15,26,46,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(196,151,59,0.08);}
+.site-nav .brand{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#fff;text-decoration:none;letter-spacing:1px;}
+.site-nav .brand b{color:#C4973B;font-weight:400;}
+.site-nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;}
+.site-nav ul a{font-family:'Jost',sans-serif;font-weight:300;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.3s;}
+.site-nav ul a:hover,.site-nav ul a.active{color:#C4973B;}
+.site-nav .desk-btn{font-family:'Jost',sans-serif;font-weight:400;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C4973B;text-decoration:none;border:1px solid rgba(196,151,59,0.3);padding:8px 20px;transition:all 0.3s;}
+.site-nav .desk-btn:hover{background:rgba(196,151,59,0.08);border-color:#C4973B;}
+@media(max-width:768px){.site-nav{padding:14px 20px;}.site-nav ul{gap:14px;}.site-nav ul a{font-size:9px;letter-spacing:1.2px;}.site-nav .desk-btn{font-size:9px;padding:6px 14px;}}
+@media(max-width:480px){.site-nav ul{display:none;}}
+</style>
+
+<style>body{padding-top:60px;}</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="brand">Razzano<b>AI</b></a>
+  <ul>
+    <li><a href="/doctrine.html">Doctrine</a></li>
+    <li><a href="/whitepaper.html">White Paper</a></li>
+    <li><a href="/pricing.html">Pricing</a></li>
+    <li><a href="/certification.html">Certification</a></li>
+    <li><a href="/workstation.html" class="active">Workstation</a></li>
+  </ul>
+  <a href="https://www.itaxpreparer.com" class="desk-btn">The Desk →</a>
+</nav>
+
+
+<div class="app">
+  <!-- ═══ SIDEBAR ═══ -->
+  <div class="sidebar">
+    <div class="sidebar-brand">
+      <h1>Razzano<span>AI</span></h1>
+      <p>Intelligence Layer</p>
+    </div>
+
+    <div class="persona-switch">
+      <label>Active Persona</label>
+      <div class="persona-btns">
+        <button class="persona-btn active-katie" id="btn-katie" onclick="switchPersona('katie')">
+          <div class="avatar k">K</div>
+          <div class="pname">Katie</div>
+          <div class="prole">Tax Manager</div>
+        </button>
+        <button class="persona-btn" id="btn-anthony" onclick="switchPersona('anthony')">
+          <div class="avatar a">A</div>
+          <div class="pname">Anthony</div>
+          <div class="prole">Strategist</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="client-section">
+      <div class="section-label">Active Clients</div>
+      <div class="client-item active" onclick="selectClient(this,'Martinez, Elena')">
+        <div class="cname">Martinez, Elena</div>
+        <div class="cstatus"><span>In Review</span></div>
+      </div>
+      <div class="client-item" onclick="selectClient(this,'Chen, David & Lin')">
+        <div class="cname">Chen, David & Lin</div>
+        <div class="cstatus"><span>Intake</span></div>
+      </div>
+      <div class="client-item" onclick="selectClient(this,'Okonkwo, Chioma')">
+        <div class="cname">Okonkwo, Chioma</div>
+        <div class="cstatus"><span>Advisory Ready</span><div class="dot warn"></div></div>
+      </div>
+      <div class="client-item" onclick="selectClient(this,'Blackwell Trust')">
+        <div class="cname">Blackwell Trust</div>
+        <div class="cstatus"><span>Pending Docs</span></div>
+      </div>
+      <div class="client-item" onclick="selectClient(this,'Rossi, Marco (S-Corp)')">
+        <div class="cname">Rossi, Marco (S-Corp)</div>
+        <div class="cstatus"><span>Planning</span><div class="dot flag"></div></div>
+      </div>
+    </div>
+
+    <div class="stats-section">
+      <div class="section-label">Today's Activity</div>
+      <div class="stat-row"><span class="slabel">Returns Reviewed</span><span class="sval">3</span></div>
+      <div class="stat-row"><span class="slabel">Risk Flags</span><span class="sval warn">2</span></div>
+      <div class="stat-row"><span class="slabel">Advisory Opportunities</span><span class="sval gold">5</span></div>
+      <div class="stat-row"><span class="slabel">Documents Verified</span><span class="sval">14</span></div>
+    </div>
+
+    <div class="tier-badge"><span>RazzanoAI Desktop · Pro</span></div>
+  </div>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main">
+    <div class="main-header">
+      <div class="mh-left">
+        <div class="mh-name" id="header-client">Martinez, Elena</div>
+        <div class="mh-sub" id="header-mode">Intake & Review · TY 2025</div>
+      </div>
+      <div class="mh-right">
+        <div class="mode-badge" id="mode-badge">Review Mode</div>
+        <div class="header-avatar" id="header-avatar" style="background:var(--navy);">K</div>
+      </div>
+    </div>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="quick-bar" id="quick-bar"></div>
+
+    <div class="input-area">
+      <div class="input-row">
+        <input type="text" id="user-input" placeholder="Ask Katie about intake, review, risk flags..." onkeydown="if(event.key==='Enter')sendMessage()">
+        <button class="send-btn" id="send-btn" style="background:var(--navy);" onclick="sendMessage()">↑</button>
+      </div>
+      <div class="input-footer">RazzanoAI · Truth first. Strategy second. Integrity always.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+let persona = 'katie';
+let activeClient = 'Martinez, Elena';
+
+const RESPONSES = {
+  katie: {
+    greeting: "Good morning. I'm Katie, your Virtual Tax Manager. I handle intake verification, document review, risk flagging, and workflow discipline. What are we working on?",
+    intake: "I've started the structured intake for this client. Let me walk through the verification checklist:\n\n✓ Filing status confirmed\n✓ Dependents verified against prior year\n⚠ W-2 box 12 codes need review — DD amount appears inconsistent with prior year\n✓ 1099-DIV qualified dividends match brokerage statement\n⚠ Schedule C gross receipts show 40% increase YoY — flag for documentation\n\nTwo items need your attention before we proceed to preparation.",
+    risk: "Risk assessment complete for this return:\n\n■ Audit Risk: MODERATE\n— Schedule C profit margin significantly below industry average\n— Home office deduction claimed with mixed-use property\n— Charitable contributions exceed 8% of AGI\n\n■ Compliance Flags:\n— Estimated payment shortfall may trigger underpayment penalty\n— State nexus question: client worked remotely in PA for 3 months\n\n■ Recommendation: Document business expense substantiation before filing. Consider estimated payment catch-up strategy.",
+    review: "Return review against prior year complete:\n\n■ Variances Identified:\n— Total income: +$34,200 (18% increase) — appears consistent with raise + new 1099 income\n— Itemized deductions: -$8,400 — SALT cap unchanged, but mortgage interest dropped (refi)\n— Effective tax rate: 22.1% → 23.8% — expected given income increase without offsetting deductions\n\n■ Carryforward Check:\n— Capital loss carryforward: $3,000 applied, $12,400 remaining — ✓ correct\n— NOL: None\n\n■ Missing Items: None identified. Return is ready for advisory review.",
+  },
+  anthony: {
+    greeting: "Anthony here. I handle strategy — tax planning, advisory positioning, entity structure analysis, and client-facing recommendations. What's the situation?",
+    planning: "Based on the return data, here are the advisory opportunities I'm seeing:\n\n■ Retirement Positioning:\n— Client maxing 401(k) at $23,500 but no backdoor Roth strategy in place\n— At this income level, a backdoor Roth conversion ladder creates significant long-term tax diversification\n— Estimated 20-year benefit: $180K–$240K in tax-free growth\n\n■ Entity Structure:\n— Schedule C net income of $142,000 suggests S-Corp election analysis\n— Estimated SE tax savings: $8,200–$12,400/year with reasonable salary\n— Implementation cost recovered in first quarter\n\n■ Estimated Tax Strategy:\n— Current withholding leaves $4,200 shortfall\n— Q4 estimated payment + W-4 adjustment eliminates penalty risk\n\nRecommendation: Schedule a planning conversation. These are not suggestions — they're measurable opportunities.",
+    entity: "Entity structure analysis for this client:\n\n■ Current: Sole Proprietorship (Schedule C)\n■ Net Income: $142,000\n■ SE Tax Exposure: ~$20,100\n\n■ S-Corp Analysis:\n— Reasonable salary range: $75,000–$85,000\n— SE tax on salary only: ~$11,475\n— Annual savings: $8,625–$12,400\n— Setup + compliance cost: ~$2,500/year\n— Net annual benefit: $6,125–$9,900\n\n■ Timing: Mid-year election available via Form 2553 late election relief\n\n■ Considerations:\n— State-level implications (FL: favorable, no state income tax)\n— Payroll compliance requirements\n— Reasonable compensation documentation\n\nThis is a clear advisory conversation. The math supports it. Document the analysis.",
+    advisory: "Client advisory summary — ready for delivery:\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nADVISORY OPPORTUNITIES IDENTIFIED\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n1. S-Corp Election → $8,600–$12,400/year savings\n2. Backdoor Roth Strategy → $180K–$240K long-term\n3. Estimated Tax Optimization → Penalty elimination\n4. Charitable Giving Strategy → Bunching + DAF consideration\n\nTotal Identified Annual Value: $14,000–$22,000\nPlanning Fee Justified: Absolutely\n\nNext Step: Schedule quarterly planning call. Present findings. Convert preparation client to advisory relationship.\n\nThis is how a $400 return becomes a $4,000 advisory relationship.",
+  }
+};
+
+const QUICK_ACTIONS = {
+  katie: [
+    { label: 'Run Intake', key: 'intake' },
+    { label: 'Risk Assessment', key: 'risk' },
+    { label: 'Return Review', key: 'review' },
+  ],
+  anthony: [
+    { label: 'Planning Opportunities', key: 'planning' },
+    { label: 'Entity Analysis', key: 'entity' },
+    { label: 'Advisory Summary', key: 'advisory' },
+  ]
+};
+
+function renderQuickActions() {
+  const bar = document.getElementById('quick-bar');
+  const actions = QUICK_ACTIONS[persona];
+  bar.innerHTML = '<span class="qlabel">Quick</span>' +
+    actions.map(a => `<button class="quick-btn ${persona}" onclick="quickAction('${a.key}','${a.label}')">${a.label}</button>`).join('');
+}
+
+function addMessage(role, text, p) {
+  const el = document.getElementById('messages');
+  const isKatie = (p || persona) === 'katie';
+  if (role === 'user') {
+    el.innerHTML += `<div class="msg user"><div class="msg-bubble">${esc(text)}</div></div>`;
+  } else {
+    const color = isKatie ? 'var(--navy)' : 'var(--gold)';
+    const letter = isKatie ? 'K' : 'A';
+    const plabel = isKatie ? 'Katie · Tax Manager' : 'Anthony · Tax Strategist';
+    const cls = isKatie ? 'katie' : 'anthony';
+    el.innerHTML += `<div class="msg ai ${cls}">
+      <div class="msg-avatar" style="background:${color}">${letter}</div>
+      <div class="msg-bubble"><div class="msg-persona">${plabel}</div>${esc(text)}</div>
+    </div>`;
+  }
+  el.scrollTop = el.scrollHeight;
+}
+
+function showTyping() {
+  const el = document.getElementById('messages');
+  const color = persona === 'katie' ? 'var(--navy)' : 'var(--gold)';
+  const letter = persona === 'katie' ? 'K' : 'A';
+  el.innerHTML += `<div class="typing" id="typing-indicator">
+    <div class="msg-avatar" style="background:${color}">${letter}</div>
+    <div class="dots"><div class="dot" style="background:${color}"></div><div class="dot" style="background:${color}"></div><div class="dot" style="background:${color}"></div></div>
+  </div>`;
+  el.scrollTop = el.scrollHeight;
+}
+
+function hideTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+function esc(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+function switchPersona(p) {
+  persona = p;
+  document.getElementById('btn-katie').className = 'persona-btn' + (p === 'katie' ? ' active-katie' : '');
+  document.getElementById('btn-anthony').className = 'persona-btn' + (p === 'anthony' ? ' active-anthony' : '');
+  document.getElementById('header-mode').textContent = (p === 'katie' ? 'Intake & Review' : 'Strategy & Planning') + ' · TY 2025';
+  document.getElementById('mode-badge').textContent = p === 'katie' ? 'Review Mode' : 'Advisory Mode';
+  document.getElementById('header-avatar').style.background = p === 'katie' ? 'var(--navy)' : 'var(--gold)';
+  document.getElementById('header-avatar').textContent = p === 'katie' ? 'K' : 'A';
+  document.getElementById('send-btn').style.background = p === 'katie' ? 'var(--navy)' : 'var(--gold)';
+  document.getElementById('user-input').placeholder = p === 'katie'
+    ? 'Ask Katie about intake, review, risk flags...'
+    : 'Ask Anthony about planning, entity structure, advisory...';
+
+  document.getElementById('messages').innerHTML = '';
+  renderQuickActions();
+
+  showTyping();
+  setTimeout(() => {
+    hideTyping();
+    addMessage('ai', RESPONSES[p].greeting, p);
+  }, 800);
+}
+
+function selectClient(el, name) {
+  document.querySelectorAll('.client-item').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  activeClient = name;
+  document.getElementById('header-client').textContent = name;
+}
+
+function sendMessage() {
+  const input = document.getElementById('user-input');
+  const text = input.value.trim();
+  if (!text) return;
+  addMessage('user', text);
+  input.value = '';
+
+  showTyping();
+  setTimeout(() => {
+    hideTyping();
+    const r = RESPONSES[persona];
+    const keys = Object.keys(r).filter(k => k !== 'greeting');
+    const key = keys[Math.floor(Math.random() * keys.length)];
+    addMessage('ai', r[key]);
+  }, 1200);
+}
+
+function quickAction(key, label) {
+  addMessage('user', label);
+  showTyping();
+  setTimeout(() => {
+    hideTyping();
+    addMessage('ai', RESPONSES[persona][key]);
+  }, 1000);
+}
+
+// ─── INIT ───
+renderQuickActions();
+setTimeout(() => addMessage('ai', RESPONSES.katie.greeting, 'katie'), 600);
+</script>
+
+<footer style="padding:48px 48px 32px;background:#0A1220;text-align:center;border-top:1px solid rgba(196,151,59,0.08);">
+  <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:#fff;letter-spacing:1px;margin-bottom:12px;">Razzano<span style="color:#C4973B;font-weight:400;">AI</span></div>
+  <div style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:24px;">The Intelligence Behind the Desk</div>
+  <div style="display:flex;justify-content:center;gap:32px;margin-bottom:24px;">
+    <a href="https://www.itaxpreparer.com" style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;">iTaxPreparer.com</a>
+    <a href="https://www.razzanoconsulting.com" style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;">Razzano Consulting</a>
+  </div>
+  <div style="font-family:'Jost',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:1px;">© 2025 Razzano Consulting, LLC. All rights reserved.</div>
+</footer>
+
+</body>
+</html>

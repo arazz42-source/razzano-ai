@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Intelligence Layer | RazzanoAI Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1B2A4A;--navy-deep:#0F1A2E;--navy-darker:#0A1220;
+  --gold:#C4973B;--gold-light:#D4AD5A;--gold-faint:rgba(196,151,59,0.06);
+  --cream:#FAF8F4;--warm-white:#FDFCFA;
+  --text:#2C2C2C;--text-light:#5A5A5A;--text-faint:#8A8A8A;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--warm-white);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.9s ease,transform 0.9s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(15,26,46,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(196,151,59,0.1);}
+.nav-brand{font-family:'Jost',sans-serif;font-weight:500;font-size:15px;color:#FFF;letter-spacing:1px;}
+.nav-brand span{color:var(--gold);font-weight:400;}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-family:'Jost',sans-serif;font-weight:300;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.3s;}
+.nav-links a:hover{color:var(--gold);}
+
+/* ===== HERO ===== */
+.hero{min-height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:140px 32px 100px;background:var(--navy-darker);position:relative;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(196,151,59,0.06) 0%,transparent 55%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0.3;}
+.hero-label{font-family:'Jost',sans-serif;font-weight:400;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:36px;opacity:0;animation:fadeUp 1s 0.3s ease forwards;}
+.hero h1{font-weight:300;font-size:clamp(36px,5.5vw,68px);line-height:1.08;color:#FFF;letter-spacing:-0.5px;margin-bottom:24px;max-width:740px;opacity:0;animation:fadeUp 1s 0.6s ease forwards;}
+.hero h1 em{font-style:italic;color:var(--gold-light);}
+.hero-sub{font-size:clamp(18px,2.2vw,23px);color:rgba(255,255,255,0.45);max-width:560px;line-height:1.6;margin-bottom:12px;opacity:0;animation:fadeUp 1s 0.9s ease forwards;}
+.hero-sub.strong{color:rgba(255,255,255,0.7);font-weight:500;opacity:0;animation:fadeUp 1s 1.05s ease forwards;}
+.hero-note{font-family:'Jost',sans-serif;font-weight:300;font-size:13px;color:rgba(255,255,255,0.25);margin-top:48px;letter-spacing:1px;opacity:0;animation:fadeUp 1s 1.2s ease forwards;}
+
+/* ===== SECTIONS ===== */
+.section{padding:100px 0;}
+.section--cream{background:var(--cream);}
+.section--navy{background:var(--navy-deep);color:rgba(255,255,255,0.85);}
+.section--dark{background:var(--navy-darker);color:rgba(255,255,255,0.85);}
+.container{max-width:960px;margin:0 auto;padding:0 32px;}
+.container--narrow{max-width:740px;margin:0 auto;padding:0 32px;}
+
+h2{font-weight:400;font-size:clamp(30px,4vw,44px);line-height:1.2;color:var(--navy);margin-bottom:16px;letter-spacing:-0.2px;}
+.section--navy h2,.section--dark h2{color:#FFF;}
+h3{font-family:'Jost',sans-serif;font-weight:400;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;}
+.body-text{font-size:21px;line-height:1.75;margin-bottom:24px;}
+.body-text.light{color:var(--text-light);}
+.section--navy .body-text,.section--dark .body-text{color:rgba(255,255,255,0.7);}
+.emphasis-line{font-weight:500;font-size:clamp(22px,2.8vw,28px);line-height:1.45;color:var(--navy);margin:36px 0;padding-left:24px;border-left:2px solid var(--gold);}
+.section--navy .emphasis-line,.section--dark .emphasis-line{color:#FFF;}
+.single-line{font-weight:500;font-size:23px;line-height:1.6;color:var(--navy);margin-bottom:20px;}
+.section--navy .single-line,.section--dark .single-line{color:#FFF;}
+.divider{width:50px;height:1px;background:var(--navy);opacity:0.12;margin:48px 0;}
+.divider.center{margin:48px auto;}
+.section--navy .divider,.section--dark .divider{background:var(--gold);opacity:0.25;}
+
+/* ===== POSITIONING STATEMENT ===== */
+.position-block{max-width:640px;margin:0 auto;text-align:center;padding:48px 0;}
+.position-block p{font-size:21px;line-height:1.7;color:var(--text-light);margin-bottom:12px;}
+.position-block p.strong{font-weight:500;color:var(--text);}
+.position-block p.accent{font-weight:500;color:var(--gold);}
+
+/* ===== COMPATIBILITY ===== */
+.compat-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:40px 0;}
+.compat-tag{padding:10px 20px;border:1px solid rgba(196,151,59,0.15);background:rgba(196,151,59,0.03);font-family:'Jost',sans-serif;font-weight:400;font-size:13px;letter-spacing:1px;color:var(--text-light);}
+
+/* ===== TIER CARDS — 3 COLUMN ===== */
+.tier-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin:48px 0;border:1px solid rgba(196,151,59,0.12);}
+.tier-card{padding:44px 32px;border-right:1px solid rgba(196,151,59,0.08);display:flex;flex-direction:column;}
+.tier-card:last-child{border-right:none;}
+.tier-card--featured{background:var(--gold-faint);position:relative;}
+.tier-card--featured::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);}
+
+.tc-badge{font-family:'Jost',sans-serif;font-weight:400;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.tc-name{font-weight:500;font-size:clamp(22px,2.8vw,28px);line-height:1.2;color:var(--navy);margin-bottom:4px;}
+.tc-sub{font-family:'Jost',sans-serif;font-weight:300;font-size:12px;color:var(--text-faint);letter-spacing:0.3px;margin-bottom:20px;}
+
+.tc-price{margin-bottom:6px;}
+.tc-price-main{font-weight:600;font-size:clamp(30px,3.8vw,42px);color:var(--navy);letter-spacing:-0.5px;}
+.tc-price-unit{font-weight:400;font-size:16px;color:var(--text-light);}
+.tc-price-alt{font-family:'Jost',sans-serif;font-weight:300;font-size:12px;color:var(--text-faint);margin-bottom:24px;}
+
+.tc-features{flex:1;margin-bottom:24px;padding-left:16px;border-left:1px solid rgba(196,151,59,0.15);}
+.tc-features p{font-size:16px;line-height:1.6;color:var(--text-light);margin-bottom:6px;}
+
+.tc-position{padding:14px 16px;background:rgba(196,151,59,0.06);border-left:2px solid var(--gold);}
+.tc-position p{font-weight:500;font-size:16px;line-height:1.45;color:var(--text);}
+
+.tc-goal{margin-top:16px;text-align:center;}
+.tc-goal-label{font-family:'Jost',sans-serif;font-weight:400;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.tc-goal-value{font-weight:600;font-size:20px;color:var(--navy);}
+
+/* ===== REVENUE TABLE ===== */
+.rev-table{width:100%;border-collapse:collapse;margin:40px 0;}
+.rev-table th{font-family:'Jost',sans-serif;font-weight:400;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-align:left;padding:12px 16px;border-bottom:1px solid rgba(196,151,59,0.2);}
+.rev-table td{font-size:19px;color:rgba(255,255,255,0.7);padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.rev-table td.num{font-weight:500;color:#FFF;font-family:'Jost',sans-serif;font-size:15px;}
+.rev-table td.total{color:var(--gold);font-weight:500;}
+.rev-table tfoot td{font-weight:600;font-size:22px;color:var(--gold);border-top:1px solid rgba(196,151,59,0.3);padding-top:20px;}
+
+/* ===== LONG GAME ===== */
+.timeline{margin:48px 0;}
+.timeline-row{display:flex;align-items:baseline;gap:20px;padding:20px 0;border-bottom:1px solid rgba(196,151,59,0.08);}
+.timeline-row:first-child{border-top:1px solid rgba(196,151,59,0.08);}
+.tl-year{font-family:'Jost',sans-serif;font-weight:500;font-size:14px;letter-spacing:1px;color:var(--gold);min-width:60px;}
+.tl-label{font-weight:500;font-size:22px;color:var(--navy);}
+.tl-desc{font-size:18px;color:var(--text-light);margin-left:auto;text-align:right;}
+
+/* ===== ANALOGY ===== */
+.analogy-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin:48px 0;}
+.analogy-card{padding:28px 20px;border:1px solid rgba(196,151,59,0.12);text-align:center;}
+.analogy-brand{font-family:'Jost',sans-serif;font-weight:400;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.analogy-model{font-weight:500;font-size:18px;color:var(--text);margin-bottom:4px;}
+.analogy-plus{font-size:16px;color:var(--text-light);}
+
+/* ===== MESSAGING ===== */
+.msg-contrast{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin:48px 0;}
+.msg-col{}
+.msg-label{font-family:'Jost',sans-serif;font-weight:400;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px;}
+.msg-label.old{color:#7A4A4A;}
+.msg-label.new{color:var(--gold);}
+.msg-col p{font-size:19px;line-height:1.7;margin-bottom:12px;}
+
+/* ===== PSYCHOLOGY ===== */
+.psych-block{text-align:center;max-width:520px;margin:0 auto;padding:40px 0;}
+.psych-block .quote{font-style:italic;font-size:24px;line-height:1.5;color:rgba(255,255,255,0.7);margin-bottom:16px;}
+.psych-block .source{font-family:'Jost',sans-serif;font-weight:300;font-size:13px;color:rgba(255,255,255,0.35);letter-spacing:1px;}
+
+/* ===== CTAs ===== */
+.btn{display:inline-block;padding:16px 40px;font-family:'Jost',sans-serif;font-weight:400;font-size:13px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all 0.3s;cursor:pointer;margin:8px;}
+.btn-gold{background:var(--gold);color:var(--navy-deep);border:1px solid var(--gold);}
+.btn-gold:hover{background:var(--gold-light);border-color:var(--gold-light);}
+.btn-outline{background:transparent;color:var(--gold);border:1px solid rgba(196,151,59,0.3);}
+.btn-outline:hover{border-color:var(--gold);color:#FFF;}
+
+/* ===== FOOTER ===== */
+.site-footer{padding:60px 0 40px;background:var(--navy-darker);text-align:center;border-top:1px solid rgba(196,151,59,0.1);}
+.footer-brand{font-family:'Jost',sans-serif;font-weight:400;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.footer-legal{font-family:'Jost',sans-serif;font-weight:300;font-size:12px;color:rgba(255,255,255,0.25);letter-spacing:0.5px;}
+
+@media(max-width:900px){
+  .tier-grid{grid-template-columns:1fr;}.tier-card{border-right:none;border-bottom:1px solid rgba(196,151,59,0.08);}.tier-card:last-child{border-bottom:none;}
+}
+@media(max-width:768px){
+  .nav{padding:16px 20px;}.nav-links{gap:14px;}.nav-links a{font-size:10px;}
+  .section{padding:72px 0;}.container,.container--narrow{padding:0 24px;}
+  .hero{padding:120px 24px 80px;}
+  .analogy-grid{grid-template-columns:1fr;}
+  .msg-contrast{grid-template-columns:1fr;}
+  .timeline-row{flex-direction:column;gap:4px;}
+  .tl-desc{margin-left:0;text-align:left;}
+}
+</style>
+
+<style>
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(15,26,46,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(196,151,59,0.08);}
+.site-nav .brand{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#fff;text-decoration:none;letter-spacing:1px;}
+.site-nav .brand b{color:#C4973B;font-weight:400;}
+.site-nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;}
+.site-nav ul a{font-family:'Jost',sans-serif;font-weight:300;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.3s;}
+.site-nav ul a:hover,.site-nav ul a.active{color:#C4973B;}
+.site-nav .desk-btn{font-family:'Jost',sans-serif;font-weight:400;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C4973B;text-decoration:none;border:1px solid rgba(196,151,59,0.3);padding:8px 20px;transition:all 0.3s;}
+.site-nav .desk-btn:hover{background:rgba(196,151,59,0.08);border-color:#C4973B;}
+@media(max-width:768px){.site-nav{padding:14px 20px;}.site-nav ul{gap:14px;}.site-nav ul a{font-size:9px;letter-spacing:1.2px;}.site-nav .desk-btn{font-size:9px;padding:6px 14px;}}
+@media(max-width:480px){.site-nav ul{display:none;}}
+</style>
+
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="brand">Razzano<b>AI</b></a>
+  <ul>
+    <li><a href="/doctrine.html">Doctrine</a></li>
+    <li><a href="/whitepaper.html">White Paper</a></li>
+    <li><a href="/pricing.html" class="active">Pricing</a></li>
+    <li><a href="/certification.html">Certification</a></li>
+    <li><a href="/workstation.html">Workstation</a></li>
+  </ul>
+  <a href="https://www.itaxpreparer.com" class="desk-btn">The Desk →</a>
+</nav>
+
+
+
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <p class="hero-label">The Intelligence Layer for Tax Professionals</p>
+  <h1>On Every <em>Desktop</em></h1>
+  <p class="hero-sub">We are not tax software.</p>
+  <p class="hero-sub strong">We are the intelligence that strengthens the professional using it.</p>
+  <p class="hero-note">Powered through iTaxPreparer.com</p>
+</section>
+
+<!-- ═══ POSITIONING ═══ -->
+<section class="section" id="position">
+  <div class="container--narrow">
+    <div class="fade-in" style="text-align:center;">
+      <h3>Strategic Position</h3>
+      <h2>The Brain Beside the Software</h2>
+    </div>
+    <div class="divider center"></div>
+    <div class="fade-in position-block">
+      <p>You are not replacing tax software.</p>
+      <p class="strong">You are sitting on top of it.</p>
+      <p>RazzanoAI integrates with the tools practitioners already use.</p>
+    </div>
+    <div class="fade-in">
+      <div class="compat-grid">
+        <span class="compat-tag">Drake</span>
+        <span class="compat-tag">Lacerte</span>
+        <span class="compat-tag">UltraTax</span>
+        <span class="compat-tag">ProSeries</span>
+        <span class="compat-tag">CCH Axcess</span>
+        <span class="compat-tag">ATX</span>
+        <span class="compat-tag">TaxAct Professional</span>
+        <span class="compat-tag">CrossLink</span>
+      </div>
+    </div>
+    <div class="fade-in" style="text-align:center;margin-top:32px;">
+      <p class="emphasis-line" style="text-align:left;">You are not competing with them. You are the brain sitting beside them.</p>
+      <p class="body-text light">That&rsquo;s a different category.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE MODEL ═══ -->
+<section class="section section--cream">
+  <div class="container--narrow">
+    <div class="fade-in" style="text-align:center;">
+      <h3>The Hybrid Model</h3>
+      <h2>Mass Accessibility. Clear Hierarchy.</h2>
+    </div>
+    <div class="divider center"></div>
+    <div class="fade-in">
+      <div class="analogy-grid">
+        <div class="analogy-card">
+          <p class="analogy-brand">Microsoft</p>
+          <p class="analogy-model">On every desktop</p>
+          <p class="analogy-plus">+ Microsoft Certified</p>
+        </div>
+        <div class="analogy-card">
+          <p class="analogy-brand">HubSpot</p>
+          <p class="analogy-model">On every desktop</p>
+          <p class="analogy-plus">+ HubSpot Certified</p>
+        </div>
+        <div class="analogy-card">
+          <p class="analogy-brand">Salesforce</p>
+          <p class="analogy-model">On every desktop</p>
+          <p class="analogy-plus">+ Salesforce Architect</p>
+        </div>
+      </div>
+    </div>
+    <div class="fade-in" style="text-align:center;margin-top:24px;">
+      <p class="body-text light">They are everywhere. But certification separates leaders.</p>
+      <p class="single-line">That is the architecture.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING TIERS ═══ -->
+<section class="section" id="tiers">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;">
+      <h3>Pricing</h3>
+      <h2>Three Levels</h2>
+      <p class="body-text light" style="margin-top:8px;">Mass adoption at entry. Operational reinforcement at mid. Leadership differentiation at top.</p>
+    </div>
+
+    <div class="fade-in">
+      <div class="tier-grid">
+
+        <!-- TIER 1 -->
+        <div class="tier-card">
+          <p class="tc-badge">Tier 1 &mdash; Mass Layer</p>
+          <p class="tc-name">RazzanoAI Desktop</p>
+          <p class="tc-sub">For every tax professional</p>
+          <div class="tc-price">
+            <p><span class="tc-price-main">$79</span><span class="tc-price-unit">/mo per preparer</span></p>
+          </div>
+          <p class="tc-price-alt">or $790/year</p>
+          <div class="tc-features">
+            <p>Virtual Tax Manager (Katie)</p>
+            <p>Virtual Tax Strategist (Anthony)</p>
+            <p>Intake intelligence</p>
+            <p>Risk flagging</p>
+            <p>Advisory prompts</p>
+            <p>AI review reinforcement</p>
+            <p>Software-agnostic compatibility</p>
+            <p>Workflow enhancement</p>
+          </div>
+          <div class="tc-position">
+            <p>Low enough for mass adoption. High enough to signal seriousness.</p>
+          </div>
+          <div class="tc-goal">
+            <p class="tc-goal-label">Scale Target</p>
+            <p class="tc-goal-value">10,000 users</p>
+          </div>
+        </div>
+
+        <!-- TIER 2 -->
+        <div class="tier-card tier-card--featured">
+          <p class="tc-badge">Tier 2 &mdash; Office Plan</p>
+          <p class="tc-name">RazzanoAI Office</p>
+          <p class="tc-sub">For serious firms that standardize</p>
+          <div class="tc-price">
+            <p><span class="tc-price-main">$199</span><span class="tc-price-unit">/mo base</span></p>
+          </div>
+          <p class="tc-price-alt">+ $49/month per additional preparer</p>
+          <div class="tc-features">
+            <p>Everything in Desktop tier</p>
+            <p>Office-level dashboards</p>
+            <p>Review tracking</p>
+            <p>Risk reporting</p>
+            <p>Documentation audit trail</p>
+            <p>Doctrine onboarding kit</p>
+            <p>Practice management reinforcement</p>
+          </div>
+          <div class="tc-position">
+            <p>Serious firms standardize here.</p>
+          </div>
+        </div>
+
+        <!-- TIER 3 -->
+        <div class="tier-card">
+          <p class="tc-badge">Tier 3 &mdash; Leadership</p>
+          <p class="tc-name">Certified Practitioner&trade;</p>
+          <p class="tc-sub">For firms that want differentiation</p>
+          <div class="tc-price">
+            <p><span class="tc-price-main">$3,500</span><span class="tc-price-unit"> certification</span></p>
+          </div>
+          <p class="tc-price-alt">$1,500 annual renewal</p>
+          <div class="tc-features">
+            <p>Certification seal</p>
+            <p>National directory listing</p>
+            <p>Advanced advisory modeling</p>
+            <p>Annual summit access</p>
+            <p>CE integration</p>
+            <p>Strategic intensives</p>
+            <p>Leadership positioning</p>
+          </div>
+          <div class="tc-position">
+            <p>Not just a user. A certified leader.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PSYCHOLOGY ═══ -->
+<section class="section section--dark">
+  <div class="container--narrow">
+    <div class="fade-in psych-block">
+      <p class="quote">&ldquo;For the cost of one client, I get an intelligence layer.&rdquo;</p>
+      <p class="source">The $79 Psychology</p>
+    </div>
+    <div class="divider center"></div>
+    <div class="fade-in" style="text-align:center;">
+      <p class="body-text" style="color:rgba(255,255,255,0.5);">Every return deserves structured thinking.</p>
+      <p class="body-text" style="color:rgba(255,255,255,0.5);">Every client deserves disciplined oversight.</p>
+      <p class="single-line">Every practitioner deserves intelligent reinforcement.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REVENUE MODEL ═══ -->
+<section class="section section--navy" id="revenue">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;">
+      <h3>Revenue Model</h3>
+      <h2>Desktop Domination Math</h2>
+    </div>
+    <div class="divider center"></div>
+    <div class="fade-in">
+      <table class="rev-table">
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>Scale Target</th>
+            <th>Annual Revenue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>RazzanoAI Desktop</td>
+            <td class="num">10,000 preparers</td>
+            <td class="total">~$7,900,000</td>
+          </tr>
+          <tr>
+            <td>RazzanoAI Office</td>
+            <td class="num">1,000 offices</td>
+            <td class="total">~$2,400,000+</td>
+          </tr>
+          <tr>
+            <td>Certified Practitioner&trade;</td>
+            <td class="num">500 certified</td>
+            <td class="total">~$1,750,000</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">Platform Revenue at Scale</td>
+            <td>$12,000,000+</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="fade-in" style="text-align:center;margin-top:32px;">
+      <p class="body-text" style="color:rgba(255,255,255,0.5);">Not seven figures.</p>
+      <p class="single-line" style="font-size:clamp(28px,3.5vw,40px);">Eight.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE LONG GAME ═══ -->
+<section class="section" id="longterm">
+  <div class="container--narrow">
+    <div class="fade-in" style="text-align:center;">
+      <h3>The Long Game</h3>
+      <h2>Three Years to Authority</h2>
+    </div>
+    <div class="fade-in">
+      <div class="timeline">
+        <div class="timeline-row">
+          <span class="tl-year">Year 1</span>
+          <span class="tl-label">Adoption</span>
+          <span class="tl-desc">Get on every desktop.</span>
+        </div>
+        <div class="timeline-row">
+          <span class="tl-year">Year 2</span>
+          <span class="tl-label">Standardization</span>
+          <span class="tl-desc">Become the expected layer.</span>
+        </div>
+        <div class="timeline-row">
+          <span class="tl-year">Year 3</span>
+          <span class="tl-label">Authority</span>
+          <span class="tl-desc">Software providers integrate you.</span>
+        </div>
+      </div>
+    </div>
+    <div class="fade-in" style="text-align:center;margin-top:36px;">
+      <p class="emphasis-line" style="text-align:left;">You become the AI governance standard for the tax profession.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MESSAGING ═══ -->
+<section class="section section--cream">
+  <div class="container--narrow">
+    <div class="fade-in" style="text-align:center;">
+      <h3>Messaging Discipline</h3>
+      <h2>Language Shift</h2>
+    </div>
+    <div class="divider center"></div>
+    <div class="fade-in">
+      <div class="msg-contrast">
+        <div class="msg-col">
+          <p class="msg-label old">Old Frame</p>
+          <p style="color:#9A6868;font-style:italic;">&ldquo;Premium gated doctrine for 200 offices.&rdquo;</p>
+          <p style="color:#9A6868;font-style:italic;">&ldquo;Boutique certification program.&rdquo;</p>
+          <p style="color:#9A6868;font-style:italic;">&ldquo;Affordable AI tax software.&rdquo;</p>
+        </div>
+        <div class="msg-col">
+          <p class="msg-label new">New Frame</p>
+          <p style="color:var(--navy);font-weight:500;">&ldquo;The intelligence layer for the entire profession.&rdquo;</p>
+          <p style="color:var(--navy);font-weight:500;">&ldquo;On every desktop. Leadership separates.&rdquo;</p>
+          <p style="color:var(--navy);font-weight:500;">&ldquo;RazzanoAI works alongside your tax software. Not to replace it. To make you better.&rdquo;</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLOSING ═══ -->
+<section class="section section--dark">
+  <div class="container--narrow">
+    <div class="fade-in" style="text-align:center;">
+      <p class="body-text" style="color:rgba(255,255,255,0.4);">Mass accessibility.</p>
+      <p class="body-text" style="color:rgba(255,255,255,0.4);">Clear hierarchy.</p>
+      <h2 style="margin-bottom:8px;">Desktop domination.</h2>
+      <p class="body-text" style="color:var(--gold-light);font-weight:500;margin-top:24px;">Truth first. Strategy second. Integrity always.</p>
+      <div style="margin-top:48px;">
+        <a href="#" class="btn btn-gold">Start with Desktop</a>
+        <a href="#" class="btn btn-outline">Get Certified</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+
+<footer style="padding:48px 48px 32px;background:#0A1220;text-align:center;border-top:1px solid rgba(196,151,59,0.08);">
+  <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:#fff;letter-spacing:1px;margin-bottom:12px;">Razzano<span style="color:#C4973B;font-weight:400;">AI</span></div>
+  <div style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:24px;">The Intelligence Behind the Desk</div>
+  <div style="display:flex;justify-content:center;gap:32px;margin-bottom:24px;">
+    <a href="https://www.itaxpreparer.com" style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;">iTaxPreparer.com</a>
+    <a href="https://www.razzanoconsulting.com" style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;">Razzano Consulting</a>
+  </div>
+  <div style="font-family:'Jost',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:1px;">© 2025 Razzano Consulting, LLC. All rights reserved.</div>
+</footer>
+
+</body>
+</html>

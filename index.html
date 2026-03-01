@@ -296,6 +296,76 @@ h3 {
   .values-grid { grid-template-columns:1fr; }
   .step-block { padding-left:20px; }
 }
+
+/* ===== COMPETITIVE DIFFERENTIATOR ===== */
+.diff-section {
+  padding:80px 0; background:var(--navy-mid);
+  text-align:center;
+  border-top:1px solid rgba(196,151,59,0.08);
+  border-bottom:1px solid rgba(196,151,59,0.08);
+}
+.diff-line {
+  font-size:20px; color:rgba(255,255,255,0.45);
+  margin-bottom:12px;
+}
+.diff-punch {
+  font-weight:500; font-size:clamp(26px,3.5vw,36px);
+  color:#FFF; letter-spacing:-0.3px;
+}
+
+/* ===== HOW IT WORKS ===== */
+.how-section { background:var(--cream); }
+.how-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:40px 0;
+}
+.how-card {
+  background:var(--warm-white); border:1px solid rgba(196,151,59,0.1);
+  padding:28px; transition:border-color 0.3s, background 0.3s;
+}
+.how-card:hover { border-color:rgba(196,151,59,0.3); background:rgba(196,151,59,0.02); }
+.how-num {
+  font-family:'Jost',sans-serif; font-size:11px;
+  letter-spacing:2px; color:var(--gold); margin-bottom:12px;
+}
+.how-name {
+  font-weight:500; font-size:22px; color:var(--navy);
+  margin-bottom:12px;
+}
+.how-rule {
+  width:24px; height:1px; background:var(--gold); opacity:0.4; margin-bottom:12px;
+}
+.how-desc {
+  font-size:16px; color:var(--text-light); line-height:1.7;
+}
+
+/* ===== CREDIBILITY ===== */
+.cred-section {
+  background:var(--navy-deep); color:#FFF;
+  border-top:1px solid rgba(196,151,59,0.08);
+}
+.cred-text {
+  font-weight:500; font-size:clamp(22px,2.8vw,28px);
+  color:#FFF; margin-bottom:16px;
+}
+.cred-sub {
+  font-size:18px; color:rgba(255,255,255,0.55); line-height:1.8;
+}
+.cred-tags {
+  display:flex; flex-wrap:wrap; gap:12px; margin-top:40px;
+}
+.cred-tag {
+  font-family:'Jost',sans-serif; font-size:10px;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--gold); border:1px solid rgba(196,151,59,0.2);
+  padding:8px 16px; background:rgba(196,151,59,0.04);
+  transition:background 0.3s;
+}
+.cred-tag:hover { background:rgba(196,151,59,0.1); }
+
+@media (max-width:640px) {
+  .how-grid { grid-template-columns:1fr; }
+}
+
 </style>
 </head>
 <body>
@@ -382,6 +452,72 @@ h3 {
       <div class="divider"></div>
       <p class="body-text light" style="text-align:center;">It is not a chatbot.</p>
       <p class="single-line" style="text-align:center;">It is an operating system for professionals who take their role seriously.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPETITIVE DIFFERENTIATOR ===== -->
+<section class="diff-section">
+  <div class="container">
+    <div class="fade-in">
+      <p class="diff-line">Other platforms automate the return.</p>
+      <p class="diff-punch">This one runs the firm.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="section how-section" id="how-it-works">
+  <div class="container">
+    <div class="fade-in">
+      <h3>Architecture</h3>
+      <h2>How It <em style="color:var(--gold);">Works</em></h2>
+      <p class="body-text light">RazzanoAI is not a feature bolted onto your workflow. It is the operating layer that makes everything in the firm work together.</p>
+
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="how-num">01</div>
+          <div class="how-name">The Firm Brain</div>
+          <div class="how-rule"></div>
+          <div class="how-desc">Holds your client list, engagement status, pipeline stages, staff assignments, deadlines, and opportunity flags. Your practice management system stays your system of record. RazzanoAI sits on top and thinks about what it all means.</div>
+        </div>
+        <div class="how-card">
+          <div class="how-num">02</div>
+          <div class="how-name">The Staff Director</div>
+          <div class="how-rule"></div>
+          <div class="how-desc">Each team member gets a workspace matched to their role and skill level. The system tells them what to work on next, helps through technical questions, drafts client communications, builds handoff packages, and escalates to the partner when judgment is needed.</div>
+        </div>
+        <div class="how-card">
+          <div class="how-num">03</div>
+          <div class="how-name">The Partner Dashboard</div>
+          <div class="how-rule"></div>
+          <div class="how-desc">Open the system and get the state of your firm. Revenue closed, revenue pending, returns in progress, opportunities aging. Not a report — a conversation. "What should I focus on today?" Answered in priority order with context behind each recommendation.</div>
+        </div>
+        <div class="how-card">
+          <div class="how-num">04</div>
+          <div class="how-name">The Advisory Engine</div>
+          <div class="how-rule"></div>
+          <div class="how-desc">As returns move through the system, planning opportunities surface automatically. Roth conversions, entity restructuring, cost segregation, insurance needs. The system drafts the recommendation memo and the engagement letter. You review, approve, deliver.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CREDIBILITY ===== -->
+<section class="section cred-section">
+  <div class="container">
+    <div class="fade-in">
+      <p class="cred-text">Built by a practitioner. Proven on a live book of business.</p>
+      <p class="cred-sub">Every workflow, every template, every advisory flag was developed inside an active CPA practice — not a lab. Not a whiteboard. Not a pitch deck. Inside the chair, with real clients, during a real tax season.</p>
+      <div class="cred-tags">
+        <span class="cred-tag">CPA</span>
+        <span class="cred-tag">MS Taxation</span>
+        <span class="cred-tag">Registered Investment Advisor</span>
+        <span class="cred-tag">NFLPA Contract Advisor</span>
+        <span class="cred-tag">Wiley Published Author</span>
+        <span class="cred-tag">20+ Years</span>
+      </div>
     </div>
   </div>
 </section>
